@@ -87,9 +87,14 @@
         "scripts/linux/python.sh",
         "scripts/linux/azurecli.sh",
         "scripts/linux/vscode.sh",
-        "scripts/linux/vbguestadditions.sh",
         "scripts/linux/cleanup.sh"
       ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/linux/vbguestadditions.sh",
+      "only": ["virtualbox-iso"]
     },
     {
       "type": "shell",
