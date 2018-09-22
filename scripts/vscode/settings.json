@@ -1,0 +1,7 @@
+{
+    "telemetry.enableCrashReporter": false,
+    "telemetry.enableTelemetry": false,
+    "terminal.integrated.rendererType": "dom",
+    "workbench.startupEditor": "newUntitledFile",
+    "update.showReleaseNotes": false
+}    

@@ -1,0 +1,113 @@
+{
+  "variables": {
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant"
+  },
+  "builders": [
+    {
+      "vm_name": "packer-centos75-hyperv",
+      "cpu": 4,
+      "switch_name": "External",
+      "generation": 2,
+      "ram_size": 4096,
+      "type": "hyperv-iso",
+      "iso_urls": [
+        "CentOS-7-x86_64-Minimal-1804.iso",
+        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+      ],
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd",
+      "http_directory": "http",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "boot_wait": "3s",
+      "enable_secure_boot": false,
+      "communicator": "ssh",
+      "ssh_timeout": "1h",
+      "boot_command": [
+        "c  setparams 'kickstart' <enter> linuxefi /images/pxeboot/vmlinuz inst.stage2=hd:LABEL=CentOS\\x207\\x20x\\86_64 inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centosks.cfg<enter> initrdefi /images/pxeboot/initrd.img<enter> boot<enter>"
+      ],
+      "shutdown_command": "echo '{{user `ssh_username`}}' | sudo -S shutdown -P now"
+    },
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "packer-centos75-virtualbox",
+      "headless": false,
+      "guest_os_type": "RedHat_64",
+      "iso_urls": [
+        "CentOS-7-x86_64-Minimal-1804.iso",
+        "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+      ],
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd",
+      "http_directory": "http",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "boot_wait": "5s",
+      "ssh_wait_timeout": "10000s",
+      "ssh_port": 22,
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ],
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centosks.cfg<enter><wait>"
+      ],
+      "shutdown_command": "echo '{{user `ssh_username`}}' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "inline": "yum -y update"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/linux/gnome.sh",
+        "scripts/linux/git.sh",
+        "scripts/linux/powershell.sh",
+        "scripts/linux/terraform.sh",
+        "scripts/linux/docker.sh",
+        "scripts/linux/python.sh",
+        "scripts/linux/azurecli.sh",
+        "scripts/linux/vscode.sh",
+        "scripts/linux/vbguestadditions.sh",
+        "scripts/linux/cleanup.sh"
+      ]
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "script": "scripts/linux/xrdp.sh",
+      "only": ["hyperv-iso"]
+    },
+    {
+      "type": "file",
+      "source": "./scripts/vscode/settings.json",
+      "destination": "/home/'{{user `ssh_username`}}'/.config/Code/User/"
+    }
+  ],
+  "post-processors": [
+    {
+      "compression_level": "9",
+      "output": "build/{{ .Provider }}/centos75-{{ .Provider }}.box",
+      "type": "vagrant"
+    }
+  ]
+}
