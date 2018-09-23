@@ -3,5 +3,7 @@
     "telemetry.enableTelemetry": false,
     "terminal.integrated.rendererType": "dom",
     "workbench.startupEditor": "newUntitledFile",
-    "update.showReleaseNotes": false
-}    
+    "update.showReleaseNotes": false,
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "One Dark Pro"
+}

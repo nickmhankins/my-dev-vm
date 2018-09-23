@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "virtualbox" do |virtualbox|
 
-    virtualbox.vm.box = "build/centos75.box"
+    virtualbox.vm.box = "build/virtualbox/centos75-virtualbox.box"
 
     config.vm.provider "virtualbox" do |vb|
 
