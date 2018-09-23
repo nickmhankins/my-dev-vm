@@ -1,5 +1,6 @@
 echo "==> VirtualBox Guest Additions"
-yum -y install "kernel-headers-$(uname -r)"
+yum -y install gcc make bzip2 kernel-headers kernel-devel dkms "kernel-headers-$(uname -r)"
+#yum -y install "kernel-headers-$(uname -r)"
 #yum -y install "kernel-devel"
 #yum -y install "kernel-devel-$(uname -r)"
 # for some reason the vb guest additions needed this particular version below...

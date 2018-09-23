@@ -74,7 +74,7 @@
       "type": "shell",
       "expect_disconnect": true,
       "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "inline": "yum -y install kernel-devel-$(uname -r) && yum -y update && reboot"
+      "inline": "yum -y update"
     },
     {
       "type": "shell",
