@@ -15,7 +15,7 @@ When writing code that will be deployed and committed using Linux systems using 
 
 #### Configuring Git
 Add this to your `.gitconfig.`
-```json 
+```
 [core]
 	autocrlf = false
 ```
