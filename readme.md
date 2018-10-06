@@ -8,10 +8,10 @@ My current Dev environment is Windows 10 with [WSL](https://docs.microsoft.com/e
 
 This VM is meant to break the habit of using WSL and eventually using Windows at all. My preferred scripting languange, PowerShell,  is now [open-source](https://github.com/PowerShell/PowerShell), so why not use this opportunity to get comfortable with other Operating Systems?  [Python will get you further](https://stackoverflow.blog/2017/09/06/incredible-growth-python/) than PowerShell in cross-platform automation, so this a good next step.
 
-## Mind the Gap - IDE/Git on Windows when developing for Linux
+## Mind the Gap - Using Windows to develop for Linux
 
 ### CRLF vs LF
-When writing code that will be deployed and committed using Linux systems using an IDE on Windows, you need to be aware of the difference between `LF` and `CRLF`, and [when to use which.](https://stackoverflow.com/questions/1552749/difference-between-cr-lf-lf-and-cr-line-break-types)  Windows doesn't really care which one you use, but Linux is very particular about LF. 
+When writing code that will be deployed and committed using Linux systems using an IDE on Windows, you need to be aware of the difference between `LF` and `CRLF`, and [when to use which.](https://stackoverflow.com/questions/1552749/difference-between-cr-lf-lf-and-cr-line-break-types)  Windows doesn't really care which one you use, but Linux is very particular.
 
 #### Configuring Git
 Add this to your `.gitconfig.`
@@ -25,7 +25,7 @@ Add this line to your `settings.json`
 "file.eol": "\n",
 ```
 
-#### Terraform
+#### Notes on Terraform
 [According the documentation](https://www.terraform.io/guides/running-terraform-in-automation.html), you cannot run `terraform plan` on a Windows machine and then run `terraform apply` on that same plan on a Linux machine.  Pass your git repo folder through to the Vagrant Linux guest and make sure you're running your terraform commands in the right console!
 
 ## Requirements
@@ -52,7 +52,7 @@ You may need to edit the Vagrantfile to reflect your setup, such as your private
 #### SSH Keys
 I wanted my Vagrant machine to use the SSH keypair from my host, here are the steps, summarized
 
-* Vagrant will initially SSH to the guest using the built-in insecure Vagrant key
+* Vagrant will initially bootstrap the guest using the built-in insecure Vagrant key
 * The file provisioner transfers my private key from the host to the VM
 * Use the file provisioner again to overwrite the `authorized_keys` file in the guest with the contents of my public key from the host, making the insecure Vagrant key unusable.
 * Since the `config.ssh.private_key_path` in my Vagrant file provides an array of keys, it will use the first one that works, which happens to the private key from my host, the one we transfered to the VM earlier
