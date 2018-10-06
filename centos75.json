@@ -5,12 +5,12 @@
   },
   "builders": [
     {
+      "type": "hyperv-iso",
       "vm_name": "packer-centos75-hyperv",
       "cpu": 4,
       "switch_name": "External",
       "generation": 2,
       "ram_size": 4096,
-      "type": "hyperv-iso",
       "iso_urls": [
         "CentOS-7-x86_64-Minimal-1804.iso",
         "http://mirrors.mit.edu/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
@@ -72,6 +72,7 @@
   "provisioners": [
     {
       "type": "shell",
+      "expect_disconnect": true,
       "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "inline": "yum -y update"
     },

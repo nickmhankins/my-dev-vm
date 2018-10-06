@@ -1,6 +1,6 @@
 echo "==> VirtualBox Guest Additions"
-yum -y install "kernel-headers-$(uname -r)"
-yum -y install "kernel-devel-$(uname -r)"
+yum -y install gcc make bzip2 kernel-headers-$(uname -r) kernel-devel-$(uname -r)
+yum -y update
 mkdir /tmp/virtualbox
 VERSION=$(cat /home/vagrant/.vbox_version)
 echo "==> Mounting VirtualBox Guest Additions ISO"
