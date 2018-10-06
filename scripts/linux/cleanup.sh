@@ -2,11 +2,9 @@
 
 echo "==> Remove persisent interface rules"
 rm -f /etc/udev/rules.d/70*
-sed -i '/^(HWADDR|UUID)=/d' /etc/sysconfig/network-scripts/ifcfg-eth0
-echo "==> Remove histfile and remove SSH and KS files"
+echo "==> Remove histfile and KS files"
 rm -f ~root/.bash_history
 unset HISTFILE
-rm -rf ~root/.ssh/
 rm -f ~root/anaconda-ks.cfg
 # Cleanup temp
 rm -rf /tmp/* ||:
@@ -22,6 +20,3 @@ dd if=/dev/zero of=/EMPTY bs=1M || echo "dd exit code $? is suppressed"
 rm -f /EMPTY
 # Block until the empty file has been removed
 sync
-
-echo "==> Disk usage after cleanup"
-df -h

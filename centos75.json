@@ -72,7 +72,6 @@
   "provisioners": [
     {
       "type": "shell",
-      "expect_disconnect": true,
       "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "inline": "yum -y update"
     },
@@ -80,14 +79,13 @@
       "type": "shell",
       "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "scripts": [
-        "scripts/linux/gnome.sh",
         "scripts/linux/git.sh",
         "scripts/linux/powershell.sh",
         "scripts/linux/terraform.sh",
         "scripts/linux/docker.sh",
         "scripts/linux/python.sh",
         "scripts/linux/azurecli.sh",
-        "scripts/linux/vscode.sh",
+        "scripts/linux/vagrantkey.sh",
         "scripts/linux/cleanup.sh"
       ]
     },
@@ -96,23 +94,12 @@
       "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
       "script": "scripts/linux/vbguestadditions.sh",
       "only": ["virtualbox-iso"]
-    },
-    {
-      "type": "shell",
-      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
-      "script": "scripts/linux/xrdp.sh",
-      "only": ["hyperv-iso"]
-    },
-    {
-      "type": "file",
-      "source": "./scripts/vscode/settings.json",
-      "destination": "/home/'{{user `ssh_username`}}'/.config/Code/User/"
     }
   ],
   "post-processors": [
     {
       "compression_level": "9",
-      "output": "build/{{ .Provider }}/centos75-{{ .Provider }}.box",
+      "output": "build/{{ .Provider }}/centos75.box",
       "type": "vagrant"
     }
   ]
