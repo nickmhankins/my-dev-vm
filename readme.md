@@ -55,7 +55,7 @@ I wanted my Vagrant machine to use the SSH keypair from my host, here are the st
 * Vagrant will initially bootstrap the guest using the built-in insecure Vagrant key
 * The file provisioner transfers my private key from the host to the VM
 * Use the file provisioner again to overwrite the `authorized_keys` file in the guest with the contents of my public key from the host, making the insecure Vagrant key unusable.
-* Since the `config.ssh.private_key_path` in my Vagrant file provides an array of keys, it will use the first one that works, which happens to the private key from my host, the one we transfered to the VM earlier
+* Since the `config.ssh.private_key_path` in my Vagrant file provides an array of keys, the next time you run `vagrant up` it will use the first one that works, which happens to the private key from my host, the one we transfered to the VM earlier.
 
 ## Why not just create a Docker container for all this?
 Shut up, I'm working on it.
