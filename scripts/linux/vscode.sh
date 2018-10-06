@@ -17,7 +17,8 @@ extensions=("ms-python.python" \
         "mauve.terraform" \
         "run-at-scale.terraform-doc-snippets" \
         "zhuangtongfa.Material-theme" \ 
-        "robertohuertasm.vscode-icons")
+        "robertohuertasm.vscode-icons" \
+        "jpogran.puppet-vscode")
 
 for i in "${extensions[@]}"
 do
