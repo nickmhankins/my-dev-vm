@@ -1,10 +1,18 @@
 {
+    "file.eol": "\n",
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
-    "terminal.integrated.rendererType": "dom",
-    "workbench.startupEditor": "newUntitledFile",
-    "update.showReleaseNotes": false,
     "workbench.iconTheme": "vscode-icons",
-    "workbench.colorTheme": "One Dark Pro",
-    "vsicons.dontShowNewVersionMessage": true
+    "workbench.colorTheme": "Atom One Dark",
+    "vsicons.dontShowNewVersionMessage": true,
+    "powershell.integratedConsole.showOnStartup": true,
+    "markdown.extension.toc.githubCompatibility": true,
+    "terminal.integrated.shell.windows": "C:\\WINDOWS\\sysnative\\WindowsPowerShell\\v1.0\\powershell.exe",
+    "markdown.extension.toc.updateOnSave": false,
+    "[powershell]": {
+        "editor.tabSize": 4
+    },
+    "[json]": {
+        "editor.tabSize": 2
+    }
 }
