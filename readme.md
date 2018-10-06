@@ -30,13 +30,13 @@ Add this line to your `settings.json`
 
 ## Requirements
 You have the option of using either **Hyper-V** or **Virtualbox**.
-## Building
+### Building
 
-### Hyper-V
+#### Hyper-V
 ```
 packer build -only=hyperv-iso centos75.json
 ```
-### VirtualBox
+#### VirtualBox
 ```
 packer build -only=virtualbox-iso centos75.json
 ```
