@@ -32,7 +32,7 @@
     {
       "type": "virtualbox-iso",
       "vm_name": "packer-centos75-virtualbox",
-      "headless": false,
+      "headless": true,
       "guest_os_type": "RedHat_64",
       "iso_urls": [
         "CentOS-7-x86_64-Minimal-1804.iso",
@@ -86,6 +86,7 @@
         "scripts/linux/python.sh",
         "scripts/linux/azurecli.sh",
         "scripts/linux/vagrantkey.sh",
+        "scripts/linux/pdk.sh",
         "scripts/linux/cleanup.sh"
       ]
     },

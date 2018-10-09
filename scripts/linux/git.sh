@@ -11,3 +11,7 @@ make prefix=/usr/local/git install
 echo "export PATH=/usr/local/git/bin:$PATH" >> /etc/bashrc
 source /etc/bashrc
 git --version
+ 
+cd ~
+git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1
+printf "GIT_PROMPT_ONLY_IN_REPO=1\nsource ~/.bash-git-prompt/gitprompt.sh\n" >> .bashrc
