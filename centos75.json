@@ -100,7 +100,7 @@
   "post-processors": [
     {
       "compression_level": "9",
-      "output": "build/{{ .Provider }}/centos75.box",
+      "output": "build/{{ .Provider }}/centos75-{{timestamp}}.box",
       "type": "vagrant"
     }
   ]
