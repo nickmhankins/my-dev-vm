@@ -17,6 +17,8 @@ Vagrant.configure(2) do |config|
       echo "Host *.company.com\n\tIdentityFile ~/.ssh/id_rsa\n" > /home/vagrant/.ssh/config
       eval `ssh-agent -s`
       ssh-add "/home/vagrant/.ssh/id_rsa"
+      echo .DS_Store >> /home/vagrant/.gitignore_global
+      git config --global core.excludesfile /home/vagrant/.gitignore_global
     SHELL
   end
   
