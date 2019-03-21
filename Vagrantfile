@@ -41,7 +41,7 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "../", "/git", type: "virtualbox"
 
   config.vm.define "virtualbox" do |virtualbox|
-    virtualbox.vm.box = "newdevopsvm"
+    virtualbox.vm.box = "build/metadata.json"
     config.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.cpus = 4

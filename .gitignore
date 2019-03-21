@@ -9,3 +9,5 @@ output-virtualbox-iso/*
 build.hwm
 build.pwd
 build.pwi
+metadata.json
+config.json
