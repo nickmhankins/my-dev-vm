@@ -6,3 +6,6 @@ build/*
 .vagrant/*
 output-hyperv-iso/*
 output-virtualbox-iso/*
+build.hwm
+build.pwd
+build.pwi

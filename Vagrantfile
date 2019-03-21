@@ -16,7 +16,7 @@ Vagrant.configure(2) do |config|
       chmod 600 /home/vagrant/.ssh/id_rsa
       sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
       sudo systemctl restart sshd
-      echo "Host *.company.com\n\tIdentityFile ~/.ssh/id_rsa\n" > /home/vagrant/.ssh/config
+      echo "Host *.nike.com\n\tIdentityFile ~/.ssh/id_rsa\n" > /home/vagrant/.ssh/config
       eval `ssh-agent -s`
       ssh-add "/home/vagrant/.ssh/id_rsa"
 
