@@ -2,12 +2,16 @@
 #   Purpose is for rebuilding a Vagrant box using Packer, incrementing the version, adding to the metadata.json, and adding to your list of boxes
 #   If it does not find a metadata.json, it will create one
 #   Packer needs to run first, then output the box, then the script will add the metadata details to the json file, or create if it doesn't exist 
-import os, subprocess, argparse, datetime, hashlib, json
+import os, argparse, datetime, hashlib, json
 
 parser = argparse.ArgumentParser(description='do things')
 parser.add_argument('jsonfile', help='Path to the packer JSON file')
 parser.add_argument('builder', help='virtualbox or hyperv')                 
-parser.add_argument('boxname', nargs='?', const='dev_vm', type=str)
+parser.add_argument('--boxname', '-b', default='dev_vm')
+parser.add_argument('--vagrantadd', '-va', 
+                    help='Runs vagrant box add on the generated metadata',
+                    action="store_true")
+
 args = parser.parse_args()
 
 def execute(system_command):
@@ -16,7 +20,11 @@ def execute(system_command):
     except Exception as e:
         print(e)
 
-def run_packer(builder, packerfile, version, boxname):
+def run_packer(packerfile, version, boxname):
+  if args.builder == 'virtualbox':
+    builder = 'virtualbox-iso'
+  else:
+    builder = 'hyperv-iso'
   execute("packer build -only={} -var 'build_version={}' -var 'box_name={}' {}".format(builder, version, boxname, packerfile))
 
 def read_json(file):
@@ -44,7 +52,6 @@ def generate_new_version(version, builder, boxpath):
   hash = get_md5(boxpath)
   return {
       'version': version,
-      'status': 'active',
       'providers': [
           {
             "name": builder,
@@ -61,10 +68,9 @@ def append_new_version(metadata, existinglist=None):
       "versions": []
   }
   if existinglist:
-    for item in existinglist:
-      item['status'] = 'inactive'
     base_dict['versions'].append(metadata)
-    base_dict['versions'].append(existinglist)
+    for item in existinglist:
+      base_dict['versions'].append(item)
   else:
     base_dict['versions'].append(metadata)
   return base_dict
@@ -79,21 +85,16 @@ def rewrite_metadata_file(new_metadata):
   write_json_config(config)
 
 def vagrant_box_add():
-  execute('vagrant box add {}'.format(metadata_path))
+  if args.vagrantadd:
+    execute('vagrant box add {}'.format(metadata_path))
 
 boxname_prefix = 'centos75-packer'
 build_num = datetime.datetime.now().strftime("%Y%m%d.%H%M%S")
-# build_num = '20190320_052222'
-if args.builder == 'virtualbox':
-  packer_builder = 'virtualbox-iso'
-else:
-  packer_builder = 'hyperv-iso'
-
 relative_box_path = 'build/{}/{}-{}.box'.format(args.builder, boxname_prefix, build_num)
 abs_box_path = os.path.abspath(relative_box_path)
 
-run_packer(packer_builder, args.jsonfile, build_num, boxname_prefix)
-metadata_path = 'config.json'
+run_packer(args.jsonfile, build_num, boxname_prefix)
+metadata_path = 'build/metadata.json'
 new_metadata = generate_new_version(build_num, args.builder, abs_box_path)
 rewrite_metadata_file(new_metadata)
 vagrant_box_add()
