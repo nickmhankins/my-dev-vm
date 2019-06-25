@@ -1,0 +1,52 @@
+---
+dotheneedful::repositories_yum:
+    azure-cli:
+        baseurl: 'https://packages.microsoft.com/yumrepos/azure-cli/'
+        gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
+    docker-ce:
+        baseurl: 'https://download.docker.com/linux/centos/7/x86_64/stable'
+        gpgkey: 'https://download.docker.com/linux/centos/gpg'
+    packages-microsoft-com-prod:
+        baseurl: 'https://packages.microsoft.com/rhel/7/prod/'
+        gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
+
+dotheneedful::repositories_rpm:
+    epel-release:
+        source: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+    ius-release:
+        source: 'https://centos7.iuscommunity.org/ius-release.rpm'
+
+dotheneedful::applications:
+    - 'zsh'
+    - 'azure-cli'
+    - 'pdk'
+    - 'puppet-bolt'
+    - 'git'
+    - 'python36u' 
+    - 'python36u-pip' 
+    - 'python36u-libs'
+    - 'docker-ce'
+    - 'powershell'
+    - 'ansible'
+
+dotheneedful::terraform_version: '0.11.14'
+
+# pip stuff doesn't work yet
+dotheneedful::pip_packages:
+    dnspython:
+        version: '1.16.0'
+    msrest: 
+        version: '0.6.6'
+    msrestazure:
+        version: '0.6.0'
+    joblib:
+        version: '0.13.2'
+    adal:
+        version: '1.2.1'
+    azure: 
+        version: '4.0.0'
+
+dotheneedful::powershell_modules:
+    Az:
+        version: '2.3.2'
+

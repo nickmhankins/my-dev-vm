@@ -1,0 +1,45 @@
+{
+  "variables": {
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant",
+    "build_version": "",
+    "box_name": "",
+    "box_output_path": ""
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "ovf_outputs/applications/02_applications.ovf",
+      "vm_name": "03_vagrant",
+      "headless": true,
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "boot_wait": "5s",
+      "guest_additions_mode": "disable",
+      "ssh_wait_timeout": "10000s",
+      "ssh_port": 22,
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ],
+      "shutdown_command": "echo '{{user `ssh_username`}}' | sudo -S shutdown -P now"
+    }
+  ],
+  "post-processors": [
+    {
+      "compression_level": "9",
+      "output": "{{user `box_output_path`}}",
+      "type": "vagrant"
+    }
+  ]
+}

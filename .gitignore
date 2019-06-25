@@ -11,3 +11,4 @@ build.pwd
 build.pwi
 metadata.json
 config.json
+ovf_outputs/*
