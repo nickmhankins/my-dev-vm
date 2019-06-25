@@ -1,4 +1,4 @@
-BOX_NAME := testing
+BOX_NAME := dev_vm
 CURRENT_DIR := $(shell pwd)
 BUILD_VER := $(shell date +"%Y%m%d_%H%M%S")
 BUILDERS_DIR := ${CURRENT_DIR}/builders
@@ -13,7 +13,7 @@ BUILD_CMD := packer build
 BASE_IMAGE_CMD := ${BUILD_CMD} ${BASE_IMAGE_JSON}
 APPLICATIONS_CMD := ${BUILD_CMD} ${APPLICATIONS_JSON}
 VAGRANT_CMD := ${BUILD_CMD} -var 'box_name=${BOX_NAME}' -var 'build_version=${BUILD_VER}' -var 'box_output_path=${VAGRANT_OUTPUT_PATH}' ${VAGRANT_JSON} 
-METADATA_CMD := python3 ${METADATA_SCRIPT} --box_path ${VAGRANT_OUTPUT_PATH} --build_version ${BUILD_VER}
+METADATA_CMD := python3 ${METADATA_SCRIPT} --box_path ${VAGRANT_OUTPUT_PATH} --build_version ${BUILD_VER} --box_name ${BOX_NAME}
 
 BASE_IMAGE_EXISTS := $(shell [ -f ${CURRENT_DIR}/ovf_outputs/base/01_baseimage.ovf ]; echo $$?)
 APP_IMAGE_EXISTS := $(shell [ -f ${CURRENT_DIR}/ovf_outputs/applications/02_applications.ovf ]; echo $$?)
@@ -72,5 +72,6 @@ kinda_clean:
 
 omg_clean: kinda_clean
 	@echo "Cleaning up all Vagrant boxes and metadata..." 
+	@rm -rf $(CURRENT_DIR)/.vagrant
 	@rm -rf $(CURRENT_DIR)/build/*.box
 	@rm -rf $(CURRENT_DIR)/build/metadata.json

@@ -5,7 +5,7 @@ def parse_args():
   parser.add_argument('--box_path', help='Path to the Vagrant .box file')
   parser.add_argument('--build_version', help='Build version string')                 
   parser.add_argument('--metadata', '-m', default='build/metadata.json')
-  parser.add_argument('--boxname', default='testing')
+  parser.add_argument('--box_name', default='dev_vm')
 
   return parser.parse_args()
 
@@ -46,7 +46,7 @@ def generate_new_version(build_version, boxpath):
 
 def append_new_version(metadata, boxname, existinglist=None):
   base_dict = {
-      "name": "{}".format(args.boxname),
+      "name": "{}".format(boxname),
       "versions": []
   }
   
@@ -67,4 +67,4 @@ def rewrite_metadata_file(new_metadata, boxname, metadata_path):
 
 args = parse_args()
 new_metadata = generate_new_version(args.build_version, args.box_path)
-rewrite_metadata_file(new_metadata, args.boxname, args.metadata)
+rewrite_metadata_file(new_metadata, args.box_name, args.metadata)

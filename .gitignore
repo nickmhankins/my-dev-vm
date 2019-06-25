@@ -1,9 +1,9 @@
 packer_cache/*
-build/*
 *.iso
 .DS_Store
 *.box
 .vagrant/*
+.vscode/*
 output-hyperv-iso/*
 output-virtualbox-iso/*
 build.hwm
