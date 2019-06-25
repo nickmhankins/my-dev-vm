@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-ovf",
+      "source_path": "ovf_outputs/base/01_baseimage.ovf",
+      "vm_name": "02_applications",
+      "headless": true,
+      "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
+      "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+      "virtualbox_version_file": ".vbox_version",
+      "ssh_password": "{{user `ssh_password`}}",
+      "boot_wait": "5s",
+      "ssh_username": "{{user `ssh_username`}}",
+      "output_directory": "ovf_outputs/applications",
+      "ssh_port": 22,
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ],
+      "shutdown_command": "echo '{{user `ssh_username`}}' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "puppet/data",
+      "destination": "/tmp/bootstrap/"
+    },
+    {
+      "type": "puppet-masterless",
+      "staging_directory": "/tmp/bootstrap/",
+      "manifest_file": "puppet/manifests/site.pp",
+      "puppet_bin_dir": "/opt/puppetlabs/bin",
+      "hiera_config_path": "hiera.yaml",
+      "module_paths": "puppet/modules"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/cleanup.sh"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "variables": {
+    "ssh_password": "vagrant",
+    "ssh_username": "vagrant"
+  },
+  "builders": [
+    {
+      "type": "virtualbox-iso",
+      "vm_name": "01_baseimage",
+      "headless": true,
+      "guest_os_type": "RedHat_64",
+      "iso_urls": [
+        "http://repos-lax.psychz.net/centos/7.5.1804/isos/x86_64/CentOS-7-x86_64-Minimal-1804.iso"
+      ],
+      "iso_checksum_type": "sha256",
+      "iso_checksum": "714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd",
+      "http_directory": "http",
+      "ssh_password": "{{user `ssh_password`}}",
+      "ssh_username": "{{user `ssh_username`}}",
+      "guest_additions_mode": "disable",
+      "output_directory": "ovf_outputs/base/",
+      "boot_wait": "5s",
+      "ssh_wait_timeout": "10000s",
+      "ssh_port": 22,
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--memory",
+          "4096"
+        ],
+        [
+          "modifyvm",
+          "{{.Name}}",
+          "--cpus",
+          "4"
+        ]
+      ],
+      "boot_command": [
+        "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/centosks.cfg<enter><wait>"
+      ],
+      "shutdown_command": "echo '{{user `ssh_username`}}' | sudo -S shutdown -P now"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "inline": "yum -y update"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "scripts": [
+        "scripts/puppet_install.sh"
+      ]
+    }
+  ]
+}

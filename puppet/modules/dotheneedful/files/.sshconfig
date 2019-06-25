@@ -1,0 +1,4 @@
+Host *
+    IdentityFile ~/.ssh/id_rsa
+    ServerAliveInterval 900
+    ServerAliveCountMax 2
