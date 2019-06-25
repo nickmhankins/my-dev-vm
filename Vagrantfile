@@ -26,17 +26,6 @@ Vagrant.configure(2) do |config|
     SHELL
   end
   
-  # things that need to be run as user
-  # config.vm.provision "shell", privileged: false do |s|
-  #   s.inline = <<-SHELL
-  #     # zsh things
-  #     sudo chsh -s $(which zsh) vagrant
-  #     curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | bash
-  #   SHELL
-  # end
-
-  # config.vm.provision "file", source: "scripts/zsh/.zshrc", destination: "~/.zshrc"
-  
   config.vm.synced_folder "../", "/git", type: "virtualbox"
 
   config.vm.define "virtualbox" do |virtualbox|

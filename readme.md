@@ -1,5 +1,9 @@
 # CentOS Dev VM
 Using Make to create repeatable Dev VM with Packer, Virtualbox, and Python to create a local emulation of Vagrant Cloud
+
+**To Do**:
+Add Vagrant commands to Makefile and update readme on use.
+
 ## Requirements
 * Packer
 * Vagrant
@@ -37,10 +41,17 @@ make vagrant_refresh
 ## Local Vagrant Cloud
 Every time you export a new Vagrant box, the `metadata.py ` script will run using information from the build to update the `build/metadata.json` file. This is used to allow versioning of your Vagrant boxes, something that is typically only available if you use Vagrant cloud.
 
-The key to this is the line `config.vm.box_url = "file://build/metadata.json"` in the Vagrantfile. Everytime you run Vagrant up, it will check the metadata file to get the path to the box, see if there is a new version, and check the hash.  You can also pin a version with `config.vm.box_version`
+The key to this is the line `vm.box_url = "file://build/metadata.json"` in the Vagrantfile. Everytime you run Vagrant up, it will check the metadata file to get the path to the box, see if there is a new version, and check the hash.
+
+### Gotchas
+* `vm.box_version` cannot be used with local metadata files.  If you want to change the version of the box you are using, you'll need to change the info in `metadata.json` file itself.
 
 ## Vagrant
-Packer will export the VM you create as a Vagrant box in the build directory, which you can start by typing at the root folder (where the `Vagrantfile` lives):
+### Assumptions:
+* You have a .gitconfig in your home directory
+* You have a public and private keypair (id_rsa, id_rsa.pub) in your home/.ssh directory
+
+Packer will export the VM you create as a Vagrant box in the build directory, which you can start with:
 ```
 vagrant up
 ```
@@ -48,9 +59,9 @@ vagrant up
 You may need to edit the Vagrantfile to reflect your setup, such as your private key name, etc.
 
 #### SSH Keys
-I wanted my Vagrant machine to use the SSH keypair from my host, here are the steps, summarized
+The Vagrantfile uses the SSH keypair from my host and simultaenously invalidate the public Vagrant using the following steps:
 
 * Vagrant will initially bootstrap the guest using the built-in insecure Vagrant key
 * The file provisioner transfers my private key from the host to the VM
-* Use the file provisioner again to overwrite the `authorized_keys` file in the guest with the contents of my public key from the host, making the insecure Vagrant key unusable.
-* Since the `config.ssh.private_key_path` in my Vagrant file provides an array of keys, the next time you run `vagrant up` it will use the first one that works, which happens to be the private key from my host, the one I transfered to the VM earlier.
+* The file provisioner then overwrites the `authorized_keys` file in the guest with the contents of my public key from the host, making the insecure Vagrant key unusable.
+* Since the `config.ssh.private_key_path` in my Vagrant file provides an array of keys, the next time you run `vagrant up` it will use the first one that works, which happens to be the private key from my host.
