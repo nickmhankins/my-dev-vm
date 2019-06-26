@@ -1,7 +1,4 @@
 class dotheneedful::repos {
-  $yum_repos = lookup(dotheneedful::repositories_yum, Hash, deep, {})
-  $rpm_repos = lookup(dotheneedful::repositories_rpm, Hash, deep, {})
-
   $yum_defaults = {
     enabled => 1,
     gpgcheck => 0,
@@ -10,6 +7,11 @@ class dotheneedful::repos {
     provider => 'rpm'
   }
 
-  create_resources(yumrepo, $yum_repos, $yum_defaults)
-  create_resources(package, $rpm_repos, $rpm_defaults)
+  $repos = lookup(dotheneedful::repositories, Hash, deep, {})
+  $rpm_source = $repos.filter | $keys, $values | { source in $values }
+  notice ($rpm_source)
+  $yum_source = $repos.filter | $keys, $values | { baseurl in $values }
+  notice ($yum_source)
+  create_resources(yumrepo, $yum_source, $yum_defaults)
+  create_resources(package, $rpm_source, $rpm_defaults)
 }

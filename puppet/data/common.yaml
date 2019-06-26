@@ -1,5 +1,5 @@
 ---
-dotheneedful::repositories_yum:
+dotheneedful::repositories:
     azure-cli:
         baseurl: 'https://packages.microsoft.com/yumrepos/azure-cli/'
         gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
@@ -9,8 +9,6 @@ dotheneedful::repositories_yum:
     packages-microsoft-com-prod:
         baseurl: 'https://packages.microsoft.com/rhel/7/prod/'
         gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'
-
-dotheneedful::repositories_rpm:
     epel-release:
         source: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     ius-release:
