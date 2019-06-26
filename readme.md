@@ -68,7 +68,7 @@ After Make exports your new or updated box, you will need to `vagrant destroy` y
 You may need to edit the Vagrantfile to reflect your setup, such as your private key name, etc.
 
 ### SSH Key steps in the Vagrantfile
-The Vagrantfile uses the SSH keypair from my host and simultaenously invalidate the public Vagrant using the following steps:
+The Vagrantfile uses the SSH keypair from my host and simultaneously invalidates the public Vagrant key using the following steps:
 
 * Vagrant will initially bootstrap the guest using the built-in insecure Vagrant key
 * The file provisioner transfers my private key from the host to the VM
