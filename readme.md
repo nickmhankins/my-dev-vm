@@ -40,6 +40,9 @@ make application_refresh [VERBOSE=true]
 ```
 make box_refresh [VERBOSE=true]
 ```
+## Vagrant
+### "Local" Vagrant Cloud
+Every time Make exports a new Vagrant box, the `metadata.py ` script will run using information from the build to update the `build/metadata.json` file. This is used to allow versioning of your Vagrant boxes, something that is typically only available if you use Hashicorp Atlas.
 
 ### Options
 * **DESTROY_ALL** - Set TRUE in `fresh_build` step to enable.  Removes all Packer builds, Vagrant boxes, and their metadata.  Subsequent fresh builds will run `vagrant box add`, otherwise `vagrant box update` will be used.
