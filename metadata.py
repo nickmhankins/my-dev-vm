@@ -62,7 +62,7 @@ def rewrite_metadata_file(new_metadata, boxname, metadata_path):
     version_list = metadata['versions']
     config = append_new_version(new_metadata, boxname, version_list)
   else:
-    config = append_new_version(new_metadata)
+    config = append_new_version(new_metadata, boxname)
   write_json_config(config, metadata_path)
 
 args = parse_args()
