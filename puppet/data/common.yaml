@@ -29,7 +29,7 @@ dotheneedful::applications:
     - 'powershell'
     - 'ansible'
 
-dotheneedful::terraform_version: '0.11.14'
+dotheneedful::terraform_version: '0.12.3'
 
 # pip stuff doesn't work yet
 dotheneedful::pip_packages:

@@ -16,7 +16,7 @@ endif
 
 BUILD_CMD := packer build
 BASE_IMAGE_CMD := ${BUILD_CMD} ${BASE_IMAGE_JSON} ${OUTPUT}
-APPLICATIONS_CMD := ${BUILD_CMD} ${APPLICATIONS_JSON} ${OUTPUT}
+APPLICATIONS_CMD := ${BUILD_CMD} -force ${APPLICATIONS_JSON} ${OUTPUT}
 VAGRANT_CMD := ${BUILD_CMD} -var 'box_name=${BOX_NAME}' -var 'build_version=${BUILD_VER}' -var 'box_output_path=${VAGRANT_OUTPUT_PATH}' ${VAGRANT_JSON} ${OUTPUT}
 METADATA_CMD := python3 ${METADATA_SCRIPT} --box_path ${VAGRANT_OUTPUT_PATH} --build_version ${BUILD_VER} --box_name ${BOX_NAME} ${OUTPUT}
 
