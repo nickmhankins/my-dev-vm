@@ -1,9 +1,6 @@
 # CentOS Dev VM
 Using Make to create a versioned, repeatable Dev VM with Packer and Vagrant. Local versioned Vagrant boxes created using Python.
 
-**To Do**:
-Add Vagrant commands to Makefile and update readme on use.
-
 ## Requirements
 * Packer
 * Vagrant
@@ -20,7 +17,7 @@ Add Vagrant commands to Makefile and update readme on use.
    - Install all applications defined in the Hiera with Puppet, cleanup the OS
 3. **Vagrant**
    - Export the Vagrant box
-   - 
+  
 ## Make
 The Packer build files are split into 3 parts and chained together to allow for quicker iteration if you just want to add new applications or create a fresh Vagrant box instead of having to redownload and update the entire VM base image.
 
