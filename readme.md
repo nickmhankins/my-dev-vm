@@ -13,10 +13,10 @@ Add Vagrant commands to Makefile and update readme on use.
 
 # Building
 
-## Packer
-The Packer definition files are split into 3 parts and chained together to speed up iteration and testing if you just want to add new applications or create a fresh Vagrant box instead of having to redownload and update the entire VM.
+## Make
+The Packer build files are split into 3 parts and chained together to allow for quicker iteration if you just want to add new applications or create a fresh Vagrant box instead of having to redownload and update the entire VM base image.
 
-**Packer Build Steps:**
+**Packer Build File steps:**
 
 1. **Base image** 
    - Download the Centos 7.5 ISO, apply updates, create users, install Puppet
@@ -25,20 +25,26 @@ The Packer definition files are split into 3 parts and chained together to speed
 3. **Vagrant**
    - Export the Vagrant box
 
-#### From scratch
+Arguments in brackets are optional
+#### From scratch, optionally destroy existing resources
 ```
-make fresh_build
+make fresh_build [DESTROY_ALL=true] [VERBOSE=true]
 ```
 
 #### Using existing base image, rebuild just applications and export new Vagrant box
 ```
-make application_refresh
+make application_refresh [VERBOSE=true]
 ```
 
 #### Use existing application image, and export new Vagrant box
 ```
-make box_refresh
+make box_refresh [VERBOSE=true]
 ```
+
+### Options
+* **DESTROY_ALL** - Set TRUE in `fresh_build` step to enable.  Removes all Packer builds, Vagrant boxes, and their metadata.  Subsequent fresh builds will run `vagrant box add`, otherwise `vagrant box update` will be used.
+* **VERBOSE** - Set TRUE to show all output from Packer and Vagrant.
+
 ## Vagrant
 ### "Local" Vagrant Cloud
 Every time Make exports a new Vagrant box, the `metadata.py ` script will run using information from the build to update the `build/metadata.json` file. This is used to allow versioning of your Vagrant boxes, something that is typically only available if you use Hashicorp Atlas.

@@ -1,4 +1,4 @@
-import os, argparse, datetime, hashlib, json
+import os, argparse, hashlib, json
 
 def parse_args():
   parser = argparse.ArgumentParser(description='do things')
