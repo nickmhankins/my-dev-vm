@@ -35,7 +35,7 @@ make application_refresh
 
 #### Use existing application image, and export new Vagrant box
 ```
-make vagrant_refresh
+make box_refresh
 ```
 
 ## Local Vagrant Cloud

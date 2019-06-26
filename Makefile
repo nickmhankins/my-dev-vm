@@ -1,6 +1,6 @@
 BOX_NAME := dev_vm
 CURRENT_DIR := $(shell pwd)
-BUILD_VER := $(shell date +"%Y%m%d_%H%M%S")
+BUILD_VER := $(shell date +"%Y%m%d.%H%M%S")
 BUILDERS_DIR := ${CURRENT_DIR}/builders
 METADATA_SCRIPT := ${CURRENT_DIR}/metadata.py
 VAGRANT_OUTPUT_PATH := ${CURRENT_DIR}/build/${BOX_NAME}-${BUILD_VER}.box
@@ -27,7 +27,7 @@ PREREQ_SUM := $(shell expr $(PREREQ_PACKER) + $(PREREQ_VAGRANT) + $(PREREQ_PYTHO
 help:
 	@echo " => fresh_build           --start Packer and Vagrant build from scratch"
 	@echo " => application_refresh   --start Packer build from application install step and export Vagrant box"
-	@echo " => vagrant_refresh       --start Packer build from Vagrant box export step"
+	@echo " => box_refresh       --start Packer build from Vagrant box export step"
 
 fresh_build: kinda_clean check_prerequisites
 	@echo "Starting build from scratch..."
@@ -46,7 +46,7 @@ else
 	@echo "Starting image not found, run a fresh build first"
 endif
 
-vagrant_refresh: check_prerequisites
+box_refresh: check_prerequisites
 ifeq (${APP_IMAGE_EXISTS}, 0)
 	@echo "Exporting a new Vagrant box from existing application image and incrementing the metadata version..."
 	@${VAGRANT_CMD} && \
