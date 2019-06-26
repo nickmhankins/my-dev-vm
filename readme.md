@@ -12,10 +12,6 @@ Add Vagrant commands to Makefile and update readme on use.
 * Virtualbox
 
 # Building
-
-## Make
-The Packer build files are split into 3 parts and chained together to allow for quicker iteration if you just want to add new applications or create a fresh Vagrant box instead of having to redownload and update the entire VM base image.
-
 **Packer Build File steps:**
 
 1. **Base image** 
@@ -24,6 +20,11 @@ The Packer build files are split into 3 parts and chained together to allow for 
    - Install all applications defined in the Hiera with Puppet, cleanup the OS
 3. **Vagrant**
    - Export the Vagrant box
+   - 
+## Make
+The Packer build files are split into 3 parts and chained together to allow for quicker iteration if you just want to add new applications or create a fresh Vagrant box instead of having to redownload and update the entire VM base image.
+
+Vagrant boxes will either be added or updated depending on whether or not you choose to destroy existing resoures - because of this, manipulating this Vagrant box outside of this Makefile may cause problems.
 
 Arguments in brackets are optional
 #### From scratch, optionally destroy existing resources
@@ -40,9 +41,6 @@ make application_refresh [VERBOSE=true]
 ```
 make box_refresh [VERBOSE=true]
 ```
-## Vagrant
-### "Local" Vagrant Cloud
-Every time Make exports a new Vagrant box, the `metadata.py ` script will run using information from the build to update the `build/metadata.json` file. This is used to allow versioning of your Vagrant boxes, something that is typically only available if you use Hashicorp Atlas.
 
 ### Options
 * **DESTROY_ALL** - Set TRUE in `fresh_build` step to enable.  Removes all Packer builds, Vagrant boxes, and their metadata.  Subsequent fresh builds will run `vagrant box add`, otherwise `vagrant box update` will be used.
@@ -56,18 +54,23 @@ Everytime you run Vagrant up, it will check the metadata file to get the path to
 
 If you want to pin to a specific box version, uncomment the config value `vm.box_version` in the Vagrantfile and add the version you want
 
-### Assumptions:
-* You have a .gitconfig in your home directory
-* You have a public and private keypair (id_rsa, id_rsa.pub) in your home/.ssh directory
-
-Packer will export the VM you create as a Vagrant box in the build directory, which you can start with:
+The only command you _should_ need to use outside of Make to bring up your box is:
 ```
 vagrant up
 ```
+or
+```
+vagrant destroy
+```
 
+After Make exports your new or updated box, you will need to `vagrant destroy` your current box, then `vagrant up` again.
+
+### Assumptions:
+* You have a .gitconfig in your home directory
+* You have a public and private keypair (id_rsa, id_rsa.pub) in your home/.ssh directory
 You may need to edit the Vagrantfile to reflect your setup, such as your private key name, etc.
 
-#### SSH Keys
+### SSH Key steps in the Vagrantfile
 The Vagrantfile uses the SSH keypair from my host and simultaenously invalidate the public Vagrant using the following steps:
 
 * Vagrant will initially bootstrap the guest using the built-in insecure Vagrant key
