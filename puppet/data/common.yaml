@@ -20,16 +20,13 @@ dotheneedful::applications:
     - 'pdk'
     - 'puppet-bolt'
     - 'git'
-    - 'python36u' 
-    - 'python36u-pip' 
-    - 'python36u-libs'
+    - 'python36-setuptools'
     - 'docker-ce'
     - 'powershell'
     - 'ansible'
 
 dotheneedful::terraform_version: '0.12.3'
 
-# pip stuff doesn't work yet
 dotheneedful::pip_packages:
     dnspython:
         version: '1.16.0'
