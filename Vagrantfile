@@ -31,6 +31,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "virtualbox" do |virtualbox|
     virtualbox.vm.box = "dev_vm"
     virtualbox.vm.box_url = "file://build/metadata.json"
+    #virtualbox.vm.box_version = ""
     virtualbox.vm.provider "virtualbox" do |vb|
       vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
       vb.cpus = 4
