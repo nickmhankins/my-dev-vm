@@ -2,7 +2,8 @@ class dotheneedful::ssh {
   file {'/home/vagrant/.ssh':
     ensure => 'directory',
     mode   => '0700',
-    owner  => 'vagrant'
+    owner  => 'vagrant',
+    group  => 'vagrant'
   }
   file {'/home/vagrant/.ssh/authorized_keys':
     ensure => 'file',
