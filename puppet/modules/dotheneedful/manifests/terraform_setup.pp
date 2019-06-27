@@ -3,6 +3,13 @@ class dotheneedful::terraform_setup {
   $user = 'vagrant'
   $install_path = "/home/${user}/.tfenv"
 
+  file { $install_path :
+    ensure => 'directory',
+    mode   => '0700',
+    owner  => $user,
+    group  => $user
+  }
+
   exec { 'clone_tfenv':
     command => "/usr/bin/git clone https://github.com/tfutils/tfenv.git ${install_path}"
   }
@@ -24,8 +31,8 @@ class dotheneedful::terraform_setup {
 
   $versions.each | String $version | {
     exec { "install_terraform_${version}":
-    command => "tfenv install ${version}",
-    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      command => "tfenv install ${version}",
+      path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
     }
   }
 
