@@ -18,6 +18,7 @@
       "ssh_username": "{{user `ssh_username`}}",
       "ssh_password": "{{user `ssh_password`}}",
       "guest_additions_mode": "disable",
+      "virtualbox_version_file": "",
       "output_directory": "ovf_outputs/base/",
       "boot_wait": "5s",
       "ssh_wait_timeout": "10000s",

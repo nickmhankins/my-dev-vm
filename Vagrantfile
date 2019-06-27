@@ -5,20 +5,13 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
   config.ssh.private_key_path = ["~/.ssh/id_rsa", "~/.vagrant.d/insecure_private_key"]
 
-  config.vm.provision "file", source: "~/.ssh/id_rsa", destination: "~/.ssh/id_rsa"
-  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
+  config.vm.provision "file", source: "~/.ssh/.", destination: "~/.ssh/"
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
+  config.vm.provision "file", source: "~/.gitignore_global", destination: "~/.gitignore_global"
 
-  # things that need to be run as root
   config.vm.provision "shell", privileged: true do |s|
     s.inline = <<-SHELL
-      # key stuff
-      chmod 600 /home/vagrant/.ssh/id_rsa
-
-      # git stuff
-      echo .DS_Store >> /home/vagrant/.gitignore_global
-      git config --global core.excludesfile /home/vagrant/.gitignore_global
-      git config --global push.default simple
+      chmod 0600 /home/vagrant/.ssh/id_rsa
     SHELL
   end
   
