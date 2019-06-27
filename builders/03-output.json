@@ -2,7 +2,8 @@
   "variables": {
     "build_version": "",
     "box_name": "",
-    "box_output_path": ""
+    "box_output_path": "",
+    "ssh_username": "vagrant"
   },
   "builders": [
     {
@@ -12,7 +13,11 @@
       "communicator": "none",
       "virtualbox_version_file": "",
       "headless": true,
+<<<<<<< HEAD
       "boot_wait": "0s",
+=======
+      "boot_wait": "5s",
+>>>>>>> master
       "guest_additions_mode": "disable"
     }
   ],
