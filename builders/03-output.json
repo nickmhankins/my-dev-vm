@@ -13,11 +13,7 @@
       "communicator": "none",
       "virtualbox_version_file": "",
       "headless": true,
-<<<<<<< HEAD
       "boot_wait": "0s",
-=======
-      "boot_wait": "5s",
->>>>>>> master
       "guest_additions_mode": "disable"
     }
   ],
