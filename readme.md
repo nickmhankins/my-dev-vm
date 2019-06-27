@@ -64,9 +64,11 @@ vagrant destroy
 After Make exports your new or updated box, you will need to `vagrant destroy` your current box, then `vagrant up` again.
 
 ### Assumptions:
-* You have a .gitconfig in your home directory
-* You have a public and private keypair (id_rsa, id_rsa.pub) in your home/.ssh directory
-You may need to edit the Vagrantfile to reflect your setup, such as your private key name, etc.
+The Vagrantfile will copy a few file from the host to the guest machine, it assumes you have the following:
+* A .gitconfig and .gitignore_global in your home directory
+* Anything in your .ssh directory will be copied to the guest - you should at minimum have a public and private keypair.
+
+You may need to edit the Vagrantfile to reflect your setup.
 
 ### SSH Key steps in the Vagrantfile
 The Vagrantfile uses the SSH keypair from my host and simultaneously invalidates the public Vagrant key using the following steps:

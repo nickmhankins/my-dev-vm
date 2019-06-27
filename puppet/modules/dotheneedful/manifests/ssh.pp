@@ -10,10 +10,4 @@ class dotheneedful::ssh {
     mode   => '0600',
     owner  => 'vagrant'
   }
-  file {'/home/vagrant/.ssh/config':
-    ensure => 'file',
-    source => 'puppet:///modules/dotheneedful/.sshconfig',
-    mode   => '0600',
-    owner  => 'vagrant'
-  }
 }
