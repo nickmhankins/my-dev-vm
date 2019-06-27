@@ -15,13 +15,12 @@
       "iso_checksum_type": "sha256",
       "iso_checksum": "714acc0aefb32b7d51b515e25546835e55a90da9fb00417fbee2d03a62801efd",
       "http_directory": "http",
-      "ssh_password": "{{user `ssh_password`}}",
       "ssh_username": "{{user `ssh_username`}}",
+      "ssh_password": "{{user `ssh_password`}}",
       "guest_additions_mode": "disable",
       "output_directory": "ovf_outputs/base/",
       "boot_wait": "5s",
       "ssh_wait_timeout": "10000s",
-      "ssh_port": 22,
       "vboxmanage": [
         [
           "modifyvm",
