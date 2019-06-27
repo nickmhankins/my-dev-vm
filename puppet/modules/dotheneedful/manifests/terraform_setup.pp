@@ -1,16 +1,32 @@
 class dotheneedful::terraform_setup {
-  $version = $dotheneedful::terraform_version
-  $base_uri = "https://releases.hashicorp.com/terraform/${version}/"
-  $filename = "terraform_${version}_linux_amd64.zip"
-  $full_uri = "${base_uri}${filename}"
-  file {"/tmp/${filename}":
-    ensure => 'present',
-    source => $full_uri
+  $versions = $dotheneedful::terraform_versions
+  $user = 'vagrant'
+  $install_path = "/home/${user}/.tfenv"
+
+  exec { 'clone_tfenv':
+    command => "/usr/bin/git clone https://github.com/tfutils/tfenv.git ${install_path}"
   }
-  exec { 'extract_tf_zip':
-    command => "/usr/bin/unzip /tmp/${filename} -d /usr/local/bin"
+
+  file { "${install_path}/.git":
+    ensure => absent,
+    force  => true
   }
-  exec { 'add_tf_path':
-    command => '/usr/bin/echo "export PATH=$PATH:/usr/local/bin" >> /etc/bashrc'
+
+  file { '/usr/local/bin/tfenv':
+    ensure => link,
+    target => "${install_path}/bin/tfenv",
   }
+
+  file { '/usr/local/bin/terraform':
+    ensure => link,
+    target => "${install_path}/bin/terraform",
+  }
+
+  $versions.each | String $version | {
+    exec { "install_terraform_${version}":
+    command => "tfenv install ${version}",
+    path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+    }
+  }
+
 }
