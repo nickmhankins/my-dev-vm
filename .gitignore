@@ -6,11 +6,10 @@ packer_cache/*
 .vscode/*
 output-hyperv-iso/*
 output-virtualbox-iso/*
+output-virtualbox-ovf/*
 build.hwm
 build.pwd
 build.pwi
 metadata.json
 config.json
 ovf_outputs/*
-*.ovf
-*.vmdk

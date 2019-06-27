@@ -2,8 +2,7 @@
   "variables": {
     "build_version": "",
     "box_name": "",
-    "box_output_path": "",
-    "ssh_username": "vagrant"
+    "box_output_path": ""  
   },
   "builders": [
     {
