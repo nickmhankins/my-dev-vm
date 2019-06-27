@@ -12,11 +12,10 @@
       "guest_additions_url": "http://download.virtualbox.org/virtualbox/{{.Version}}/VBoxGuestAdditions_{{.Version}}.iso",
       "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
       "virtualbox_version_file": ".vbox_version",
+      "ssh_username": "{{user `ssh_username`}}",
       "ssh_password": "{{user `ssh_password`}}",
       "boot_wait": "5s",
-      "ssh_username": "{{user `ssh_username`}}",
       "output_directory": "ovf_outputs/applications",
-      "ssh_port": 22,
       "vboxmanage": [
         [
           "modifyvm",
@@ -47,6 +46,14 @@
       "puppet_bin_dir": "/opt/puppetlabs/bin",
       "hiera_config_path": "hiera.yaml",
       "module_paths": "puppet/modules"
+    },
+    {
+      "type": "shell",
+      "execute_command": "echo '{{user `ssh_username`}}' | {{.Vars}} sudo -S -E bash '{{.Path}}'",
+      "inline": [
+        "sed -i 's|[#]*PasswordAuthentication yes|PasswordAuthentication no|g' /etc/ssh/sshd_config",
+        "sed -i 's|UsePAM yes|UsePAM no|g' /etc/ssh/sshd_config"
+      ]
     },
     {
       "type": "shell",

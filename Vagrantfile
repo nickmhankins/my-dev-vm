@@ -14,10 +14,6 @@ Vagrant.configure(2) do |config|
     s.inline = <<-SHELL
       # key stuff
       chmod 600 /home/vagrant/.ssh/id_rsa
-      sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
-      sudo systemctl restart sshd
-      eval `ssh-agent -s`
-      ssh-add "/home/vagrant/.ssh/id_rsa"
 
       # git stuff
       echo .DS_Store >> /home/vagrant/.gitignore_global
