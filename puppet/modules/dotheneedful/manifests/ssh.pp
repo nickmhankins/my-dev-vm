@@ -5,7 +5,7 @@ class dotheneedful::ssh {
     owner  => 'vagrant',
     group  => 'vagrant'
   }
-  file {'/home/vagrant/.ssh/authorized_keys':
+  -> file {'/home/vagrant/.ssh/authorized_keys':
     ensure => 'file',
     source => 'https://raw.github.com/mitchellh/vagrant/master/keys/vagrant.pub',
     mode   => '0600',

@@ -10,14 +10,15 @@ class dotheneedful::ohmyzsh {
     user    => $user
   }
 
-  user { $user:
+  -> user { $user:
     shell  => '/bin/zsh'
   }
 
   $repos.each |String $repo| {
     $name = split($repo, '/')[-1]
     exec {"${repo}_install":
-      command => "/usr/bin/git clone ${repo} /home/${user}/.oh-my-zsh/custom/plugins/${name}"
+      command => "/usr/bin/git clone ${repo} /home/${user}/.oh-my-zsh/custom/plugins/${name}",
+      require => Exec['install_ohmyzsh']
     }
   }
 
@@ -25,7 +26,8 @@ class dotheneedful::ohmyzsh {
     ensure  => 'file',
     content => epp('dotheneedful/zshrc.epp'),
     mode    => '0600',
-    owner   => $user
+    owner   => $user,
+    require => Exec['install_ohmyzsh']
   }
 
 }

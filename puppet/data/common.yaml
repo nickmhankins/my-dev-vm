@@ -17,15 +17,16 @@ dotheneedful::repositories:
 dotheneedful::applications:
     - 'zsh'
     - 'git'
-    - 'azure-cli'
-    - 'pdk'
-    - 'puppet-bolt'
-    - 'python36-setuptools'
-    - 'docker-ce'
-    - 'powershell'
-    - 'ansible'
+    # - 'azure-cli'
+    # - 'pdk'
+    # - 'puppet-bolt'
+    # - 'python36-setuptools'
+    # - 'docker-ce'
+    # - 'powershell'
+    # - 'ansible'
 
-dotheneedful::terraform_versions: 
+dotheneedful::terraform_versions:
+    - '0.11.11' 
     - '0.11.14'
     - '0.12.3'
 
