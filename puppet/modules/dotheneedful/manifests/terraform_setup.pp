@@ -20,7 +20,7 @@ class dotheneedful::terraform_setup {
     force  => true
   }
 
-  file { '/usr/local/bin/tfenv':
+  -> file { '/usr/local/bin/tfenv':
     ensure => link,
     target => "${install_path}/bin/tfenv",
   }
