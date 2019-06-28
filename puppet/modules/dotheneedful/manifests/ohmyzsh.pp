@@ -5,13 +5,14 @@ class dotheneedful::ohmyzsh {
   $installsource = "${base_uri}/tools/install.sh"
   $repos = $dotheneedful::ohmyzsh_plugin_repos
 
-  exec { 'install_ohmyzsh':
-    command => "/usr/bin/curl -fsSL ${installsource} | /usr/bin/bash",
-    user    => $user
+  user { $user:
+    shell   => '/bin/zsh',
+    require => Package['zsh']
   }
 
-  -> user { $user:
-    shell  => '/bin/zsh'
+  -> exec { 'install_ohmyzsh':
+    command => "/usr/bin/curl -fsSL ${installsource} | /usr/bin/bash",
+    user    => $user
   }
 
   $repos.each |String $repo| {

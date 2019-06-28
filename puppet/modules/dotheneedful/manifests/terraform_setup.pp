@@ -20,12 +20,12 @@ class dotheneedful::terraform_setup {
     force  => true
   }
 
-  -> file { '/usr/local/bin/tfenv':
+  file { '/usr/local/bin/tfenv':
     ensure => link,
     target => "${install_path}/bin/tfenv",
   }
 
-  -> file { '/usr/local/bin/terraform':
+  file { '/usr/local/bin/terraform':
     ensure => link,
     target => "${install_path}/bin/terraform",
   }
@@ -35,7 +35,7 @@ class dotheneedful::terraform_setup {
       command => "tfenv install ${version}",
       path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
       user    => $user,
-      require => File['/usr/local/bin/terraform']
+      require => [ File['/usr/local/bin/terraform'], File['/usr/local/bin/tfenv'] ]
     }
   }
 
