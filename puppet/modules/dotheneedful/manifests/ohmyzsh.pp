@@ -5,19 +5,21 @@ class dotheneedful::ohmyzsh {
   $installsource = "${base_uri}/tools/install.sh"
   $repos = $dotheneedful::ohmyzsh_plugin_repos
 
-  exec { 'install_ohmyzsh':
-    command => "/usr/bin/curl -fsSL ${installsource} | /usr/bin/bash",
-    user    => $user
+  user { $user:
+    shell   => '/bin/zsh',
+    require => Package['zsh']
   }
 
-  user { $user:
-    shell  => '/bin/zsh'
+  -> exec { 'install_ohmyzsh':
+    command => "/usr/bin/curl -fsSL ${installsource} | /usr/bin/bash",
+    user    => $user
   }
 
   $repos.each |String $repo| {
     $name = split($repo, '/')[-1]
     exec {"${repo}_install":
-      command => "/usr/bin/git clone ${repo} /home/${user}/.oh-my-zsh/custom/plugins/${name}"
+      command => "/usr/bin/git clone ${repo} /home/${user}/.oh-my-zsh/custom/plugins/${name}",
+      require => Exec['install_ohmyzsh']
     }
   }
 
@@ -25,7 +27,8 @@ class dotheneedful::ohmyzsh {
     ensure  => 'file',
     content => epp('dotheneedful/zshrc.epp'),
     mode    => '0600',
-    owner   => $user
+    owner   => $user,
+    require => Exec['install_ohmyzsh']
   }
 
 }

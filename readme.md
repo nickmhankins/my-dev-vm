@@ -67,6 +67,7 @@ After Make exports your new or updated box, you will need to `vagrant destroy` y
 The Vagrantfile will copy a few files from the host to the guest machine, it assumes you have the following:
 * A .gitconfig and .gitignore_global in your home directory
 * Anything in your .ssh directory will be copied to the guest - you should at minimum have a public and private keypair.
+* A ~/git directory, which will be passed through to /git on the guest
 
 You may need to edit the Vagrantfile to reflect your setup.
 

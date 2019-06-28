@@ -6,6 +6,7 @@ Vagrant.configure(2) do |config|
   config.ssh.private_key_path = ["~/.ssh/id_rsa", "~/.vagrant.d/insecure_private_key"]
 
   config.vm.provision "file", source: "~/.ssh/.", destination: "~/.ssh/"
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
   config.vm.provision "file", source: "~/.gitignore_global", destination: "~/.gitignore_global"
 

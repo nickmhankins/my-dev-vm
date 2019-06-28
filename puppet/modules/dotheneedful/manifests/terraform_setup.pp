@@ -5,16 +5,17 @@ class dotheneedful::terraform_setup {
 
   file { $install_path :
     ensure => 'directory',
-    mode   => '0700',
+    mode   => '0755',
     owner  => $user,
     group  => $user
   }
 
-  exec { 'clone_tfenv':
-    command => "/usr/bin/git clone https://github.com/tfutils/tfenv.git ${install_path}"
+  -> exec { 'clone_tfenv':
+    command => "/usr/bin/git clone https://github.com/tfutils/tfenv.git ${install_path}",
+    user    => $user
   }
 
-  file { "${install_path}/.git":
+  -> file { "${install_path}/.git":
     ensure => absent,
     force  => true
   }
@@ -33,6 +34,8 @@ class dotheneedful::terraform_setup {
     exec { "install_terraform_${version}":
       command => "tfenv install ${version}",
       path    => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      user    => $user,
+      require => [ File['/usr/local/bin/terraform'], File['/usr/local/bin/tfenv'] ]
     }
   }
 

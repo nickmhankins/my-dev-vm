@@ -25,7 +25,8 @@ dotheneedful::applications:
     - 'powershell'
     - 'ansible'
 
-dotheneedful::terraform_versions: 
+dotheneedful::terraform_versions:
+    - '0.11.11' 
     - '0.11.14'
     - '0.12.3'
 
