@@ -1,7 +1,9 @@
 class dotheneedful::vbox_guestadditions {
 
-  $vbox_version = file('/home/vagrant/.vbox_version')
-  $isopath = "/home/vagrant/VBoxGuestAdditions_${vbox_version}.iso"
+  $user = 'vagrant'
+  $vbox_version_path = "/home/${user}/.vbox_version"
+  $vbox_version_content = file($vbox_version_path)
+  $isopath = "/home/${user}/VBoxGuestAdditions_${vbox_version_content}.iso"
 
   $prereqs = ['gcc', 'make', 'bzip2', 'kernel-headers', 'kernel-devel']
   package { $prereqs:
@@ -24,6 +26,9 @@ class dotheneedful::vbox_guestadditions {
     command => '/bin/rm -rf /tmp/virtualbox'
   }
   -> file {$isopath:
+    ensure => absent,
+  }
+  -> file {$vbox_version_path:
     ensure => absent,
   }
 }
