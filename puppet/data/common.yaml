@@ -13,6 +13,10 @@ dotheneedful::repositories:
         source: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
     ius-release:
         source: 'https://centos7.iuscommunity.org/ius-release.rpm'
+    kubernetes:
+        baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
+        gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+
 
 dotheneedful::applications:
     - 'zsh'
@@ -21,9 +25,13 @@ dotheneedful::applications:
     - 'pdk'
     - 'puppet-bolt'
     - 'python36-setuptools'
-    - 'docker-ce'
+    - 'kubernetes'
+    - 'docker-compose'
     - 'powershell'
     - 'ansible'
+    - 'nmap'
+    - 'telnet'
+    - 'npm'
 
 dotheneedful::terraform_versions:
     - '0.11.11' 
@@ -43,6 +51,8 @@ dotheneedful::pip_packages:
         version: '1.2.1'
     azure: 
         version: '4.0.0'
+    flask: 
+        version: '1.0.3'
 
 dotheneedful::powershell_modules:
     Az:
