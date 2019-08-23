@@ -16,7 +16,8 @@ dotheneedful::repositories:
     kubernetes:
         baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
         gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
-
+    node:
+        source: 'https://rpm.nodesource.com/pub_10.x/el/7/x86_64/nodesource-release-el7-1.noarch.rpm'
 
 dotheneedful::applications:
     - 'zsh'
@@ -25,18 +26,21 @@ dotheneedful::applications:
     - 'pdk'
     - 'puppet-bolt'
     - 'python36-setuptools'
-    - 'kubernetes'
+    - 'docker'
     - 'docker-compose'
     - 'powershell'
     - 'ansible'
     - 'nmap'
     - 'telnet'
-    - 'npm'
+    - 'nodejs'
+    # - 'libunwind'  # prereq for azure functions....gd microsoft
+    # - 'azure-functions-core-tools'
 
 dotheneedful::terraform_versions:
     - '0.11.11' 
     - '0.11.14'
-    - '0.12.3'
+    - '0.12.5'
+    - '0.12.6'
 
 dotheneedful::pip_packages:
     dnspython:
@@ -53,6 +57,8 @@ dotheneedful::pip_packages:
         version: '4.0.0'
     flask: 
         version: '1.0.3'
+    # azure-cli:
+    #     version: '2.0.70'
 
 dotheneedful::powershell_modules:
     Az:
