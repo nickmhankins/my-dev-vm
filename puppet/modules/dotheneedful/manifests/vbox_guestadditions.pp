@@ -9,7 +9,6 @@ class dotheneedful::vbox_guestadditions {
   package { $prereqs:
     ensure => 'installed'
   }
-
   -> file {'/tmp/virtualbox':
     ensure  => 'directory'
   }
