@@ -33,8 +33,7 @@ dotheneedful::applications:
     - 'nmap'
     - 'telnet'
     - 'nodejs'
-    # - 'libunwind'  # prereq for azure functions....gd microsoft
-    # - 'azure-functions-core-tools'
+    - 'azure-functions-core-tools'
 
 dotheneedful::terraform_versions:
     - '0.11.11' 

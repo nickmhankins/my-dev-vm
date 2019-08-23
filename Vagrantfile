@@ -9,6 +9,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys"
   config.vm.provision "file", source: "~/.gitconfig", destination: "~/.gitconfig"
   config.vm.provision "file", source: "~/.gitignore_global", destination: "~/.gitignore_global"
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
+  config.vm.network "forwarded_port", guest: 3080, host: 3080
 
   config.vm.provision "shell", privileged: true do |s|
     s.inline = <<-SHELL
